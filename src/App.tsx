@@ -6,6 +6,7 @@ import { AppProps, Users } from "./App.types";
 const App: FC<AppProps> = ({ title }) => {
   const [users, setUsers] = useState<Users[]>([]);
   const [isLoading, setisLoading] = useState(false);
+  const [username, setUsername] = useState("");
 
   const handleClick = async () => {
     try {
@@ -20,12 +21,16 @@ const App: FC<AppProps> = ({ title }) => {
     }
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
   return (
     <div className="">
-      <div></div>
       <h1>{title}</h1>
       <button onClick={handleClick}>Show Users</button>
-      {isLoading && <p>Loading...</p>}\
+      <input type="text" onChange={handleChange} value={username} />
+      <div>{username}</div>
+      {isLoading && <p>Loading...</p>}
       <ul>
         {users.map(({ login, name, email }) => {
           return <User name={name} email={email} key={login.uuid} />;
